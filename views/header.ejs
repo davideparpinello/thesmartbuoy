@@ -1,0 +1,73 @@
+<!-- Preloader - style you can find in spinners.css -->
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+	<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+</div>
+<!-- Main wrapper  -->
+<div id="main-wrapper">
+    <!-- header header  -->
+    <div class="header">
+        <nav class="navbar top-navbar navbar-expand-md navbar-light">
+            <!-- Logo -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <!-- Logo icon -->
+                    <b><img src="/img/icon.svg" alt="homepage" class="dark-logo-icon" /></b>
+                    <!--End Logo icon -->
+                    <!-- Logo text -->
+                    <span class="dark-logo">The Smart Buoy</span>
+                </a>
+            </div>
+            <!-- End Logo -->
+            <div class="navbar-collapse">
+                <!-- toggle and nav items -->
+                <ul class="navbar-nav mr-auto mt-md-0">
+                    <!-- This is  -->
+                    <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted  " href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+                    <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                    <!-- Messages -->
+
+                </ul>
+                <!-- User profile and search -->
+                <ul class="navbar-nav my-lg-0">
+                    <!-- Profile -->
+                    <li class="nav-item dropdown">
+                        <div class="nav-link dropdown-toggle text-muted  " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="any">Benvenuto, <strong><%= user %></strong></div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- End header header -->
+    <!-- Left Sidebar  -->
+    <div class="left-sidebar">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav">
+                <ul id="sidebarnav">
+                    <li class="nav-devider"></li>
+                    <li class="nav-label">Home</li>
+                    <li> <a href="/" aria-expanded="false"><i class="fa fa-tachometer"></i><span class="hide-menu">Dashboard</span></a>
+                    </li>
+                    <li class="nav-label">Apps</li>
+                    <li> <a href="/tables" aria-expanded="false"><i class="fa fa-table"></i><span class="hide-menu">Lista segnalazioni</span></a>
+                    </li>
+                    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-bar-chart"></i><span class="hide-menu">Grafici</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="/graphs?type=daily">Giornalieri</a></li>
+                            <li><a href="/graphs?type=weekly">Settimanali</a></li>
+                            <li><a href="/graphs?type=monthly">Mensili</a></li>
+                            <li><a href="/graphs?type=yearly">Annuali</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-label">Impostazioni</li>
+                    <li> <a href="/settings" aria-expanded="false"><i class="fa fa-gear"></i><span class="hide-menu">Configurazione sistema</span></a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+    </div>
+    <!-- End Left Sidebar  -->

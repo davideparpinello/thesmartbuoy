@@ -1,0 +1,51 @@
+html{
+    min-height:100%;/* make sure it is at least as tall as the viewport */
+    position:relative;
+}
+body{
+    height:100%; /* force the BODY element to match the height of the HTML element */
+}
+
+.dark-logo {
+    width: 100%;
+    margin-left: 20px;
+}
+
+.dark-logo-icon {
+    width: 150%;
+    padding: 4px;
+}
+
+#pSegnalazione {
+    color: black;
+    font-size: 130%;
+}
+
+.alert {
+    min-height: 50px;
+}
+
+.pignose-calendar-unit:hover a {
+    background-color: #e6e6e6;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track-piece {
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #CBCBCB;
+    outline: 2px solid #FFF;
+    outline-offset: -2px;
+    border: .1px solid #B7B7B7;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #909090;
+}

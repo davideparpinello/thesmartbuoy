@@ -1,0 +1,55 @@
+<script type="text/javascript">
+    function closeModal() {
+        overlay = document.getElementById('overlay');
+        overlay.style.opacity = "-1.03";
+        overlay.style.display = "none";
+        overAlert = $("#overAlert");
+
+        overAlert.addClass('hideSweetAlert');
+        overAlert.removeClass('showSweetAlert');
+        overAlert.removeClass('visible');
+        setTimeout(function() {
+            overAlert.css("display", "none");
+			window.top.location = window.top.location;
+        }, 200);
+
+
+    }
+</script>
+<script src="/js/core.js"></script>
+<div class="sweet-overlay" id="overlay" tabindex="-1" style="opacity: -1.03; display: none;"></div>
+<div class="sweet-alert hideSweetAlert" id="overAlert" data-custom-class="" data-has-cancel-button="false" data-has-confirm-button="true" data-allow-outside-click="false" data-has-done-function="false" data-animation="pop" data-timer="null" style="display: hidden;">
+    <div class="sa-icon sa-warning" style="display: block;">
+        <span class="sa-body"></span>
+        <span class="sa-dot"></span>
+    </div>
+    <div class="sa-icon sa-info" style="display: none;"></div>
+    <div class="sa-icon sa-success" style="display: none;">
+        <span class="sa-line sa-tip"></span>
+        <span class="sa-line sa-long"></span>
+        <div class="sa-placeholder"></div>
+        <div class="sa-fix"></div>
+    </div>
+    <div class="sa-icon sa-custom" style="display: none;"></div>
+    <h2>Nuova allerta</h2>
+    <p style="display: block;" id="alertText"></p>
+    <fieldset>
+        <input type="text" tabindex="3" placeholder="">
+        <div class="sa-input-error"></div>
+    </fieldset>
+    <div class="sa-error-container">
+        <div class="icon">!</div>
+        <p>Not valid!</p>
+    </div>
+    <div class="sa-button-container">
+        <button class="cancel" tabindex="2" style="display: none;">Cancel</button>
+        <div class="sa-confirm-button-container">
+            <button class="confirm" tabindex="1" style="display: inline-block; background-color: rgb(140, 212, 245); box-shadow: rgba(140, 212, 245, 0.8) 0px 0px 2px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px inset;" onclick="closeModal()">OK</button>
+            <div class="la-ball-fall">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</div>

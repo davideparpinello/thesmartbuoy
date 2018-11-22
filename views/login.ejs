@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>The Smart Buoy - Login</title>
+    <link href="ela/css/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="ela/css/helper.css" rel="stylesheet">
+    <link href="ela/css/style.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+		<script src="js/html5shiv.js"></script>
+		<script src="js/respond.min.js"></script>
+		<![endif]-->
+    <style>
+        html {
+            min-height: 100%;
+            /* make sure it is at least as tall as the viewport */
+            position: relative;
+        }
+
+        body {
+            height: 100%;
+            /* force the BODY element to match the height of the HTML element */
+        }
+
+        #main-wrapper {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+            z-index: -1;
+            /* Remove this line if it's not going to be a background! */
+        }
+    </style>
+</head>
+
+<body class="fix-header fix-sidebar">
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+				<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+    </div>
+    <div id="main-wrapper" style="background: #ffffff url(https://www.laboaintelligente.it/boa.jpg) no-repeat center bottom fixed !important;">
+        <div class="unix-login">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4">
+                        <div class="login-content card">
+                            <div class="login-form">
+                                <img src="/img/buoy.svg" alt="The Smart Buoy Logo" title="Logo" style="width: 100%" />
+                                <br>
+                                <br>
+                                <h4>Login</h4>
+                                <form role="form" action="login" method="post">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <input class="form-control" placeholder="E-mail" name="email" type="text" autofocus="">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+													<input name="remember" type="checkbox" value="Remember Me">
+													<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Remember Me
+												</label>
+                                        </div>
+                                        <br>
+                                        <input type="submit" name="submit" class="btn btn-primary" value="Login">
+                                    </fieldset>
+                                </form>
+                                <br>
+                                <div id="errorLogin">
+                                    <p>
+                                        <%= errorLogin %>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- All Jquery -->
+    <script src="ela/js/lib/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="ela/js/lib/bootstrap/js/popper.min.js"></script>
+    <script src="ela/js/lib/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="ela/js/jquery.slimscroll.js"></script>
+    <!--Menu sidebar -->
+    <script src="ela/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="ela/js/lib/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="ela/js/custom.min.js"></script>
+
+</body>
+
+</html>

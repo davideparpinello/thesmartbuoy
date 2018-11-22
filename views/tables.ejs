@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html ng-app="tables" lang="it">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Lista Segnalazioni - The Smart Buoy</title>
+
+    <script src="/js/socket.io.js"></script>
+    <script src="/js/moment-with-locales.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+
+    <link href="/ela/css/lib/owl.carousel.min.css" rel="stylesheet" />
+    <link href="/ela/css/lib/owl.theme.default.min.css" rel="stylesheet" />
+    <!-- Bootstrap Core CSS -->
+    <link href="/ela/css/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/ela/css/lib/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="/ela/css/helper.css" rel="stylesheet">
+    <link href="/ela/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/responsivetables.css" />
+    <script src="/js/responsivetables.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
+    <!--[if lt IE 9]>
+    <script src="https:**oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https:**oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        var tables = angular.module('tables', []);
+        tables.controller('tables', function($scope) {
+            $scope.reports = <%- JSON.stringify(reports) %>;
+        });
+    </script>
+</head>
+
+<body ng-controller="tables" class="fix-header fix-sidebar">
+    <%- include header.ejs %>
+        <div class="page-wrapper">
+            <!-- Bread crumb -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">Lista segnalazioni</h3>
+                </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Apps</a></li>
+                        <li class="breadcrumb-item active">Lista Segnalazioni</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- End Bread crumb -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Esporta dati</h4>
+                                <h4 class="card-subtitle">Esporta i dati in Copia, CSV, Excel, PDF e Stampa</h4>
+                                <div class="table-responsive m-t-40">
+                                    <table id="listaSegnalazioni" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%" data-toggle="table" data-show-refresh="true">
+                                        <thead>
+                                            <th data-field="date" data-sortable="true">Data</th>
+                                            <th data-field="tempAcqua" data-sortable="true">Temperatura dell'acqua (°C)</th>
+                                            <th data-field="tempEst" data-sortable="true">Temperatura esterna (°C)</th>
+                                            <th data-field="umid" data-sortable="true">Umidità (%)</th>
+                                            <th data-field="latitud" data-sortable="true">Latitudine</th>
+                                            <th data-field="longitud" data-sortable="true">Longitudine</th>
+                                            <th data-field="velAcqua" data-sortable="true">Velocità dell'acqua (dm<sup>3</sup>/s)</th>
+                                            <th data-field="condAcqua" data-sortable="true">Conducibilità dell'acqua us/cm</th>
+                                            <th data-field="pressAcqua" data-sortable="true">Profondità dell'acqua (m)</th>
+                                            <th data-field="ph" data-sortable="true">pH dell'acqua</th>
+                                            <th data-field="ossigeno" data-sortable="true">Ossigeno disciolto (%)</th>
+                                            <th data-field="pm10" data-sortable="true">Polveri sottili - PM<sub>10</sub> (ug/cm<sup>3</sup>)</th>
+                                            <th data-field="batt" data-sortable="true">Batteria della boa (V)</th>
+                                        </thead>
+                                        <tr ng-repeat="report in reports">
+                                            <td>{{report.date | date:'yyyy-MM-dd HH:MM:ss'}}</td>
+                                            <td>{{report.tempAcqua}}</td>
+                                            <td>{{report.tempEst}}</td>
+                                            <td>{{report.umid}}</td>
+                                            <td>{{report.latitud}}</td>
+                                            <td>{{report.longitud}}</td>
+                                            <td>{{report.velAcqua}}</td>
+                                            <td>{{report.condAcqua}}</td>
+                                            <td>{{report.pressAcqua}}</td>
+                                            <td>{{report.ph}}</td>
+                                            <td>{{report.ossigeno}}</td>
+                                            <td>{{report.pm10}}</td>
+                                            <td>{{report.batt}}</td>
+                                        </tr>
+                                        <tfoot>
+                                            <th data-field="date" data-sortable="true">Data</th>
+                                            <th data-field="tempAcqua" data-sortable="true">Temperatura dell'acqua (°C)</th>
+                                            <th data-field="tempEst" data-sortable="true">Temperatura esterna (°C)</th>
+                                            <th data-field="umid" data-sortable="true">Umidità (%)</th>
+                                            <th data-field="latitud" data-sortable="true">Latitudine</th>
+                                            <th data-field="longitud" data-sortable="true">Longitudine</th>
+                                            <th data-field="velAcqua" data-sortable="true">Velocità dell'acqua (dm<sup>3</sup>/s)</th>
+                                            <th data-field="condAcqua" data-sortable="true">Conducibilità dell'acqua us/cm</th>
+                                            <th data-field="pressAcqua" data-sortable="true">Profondità dell'acqua (m)</th>
+                                            <th data-field="ph" data-sortable="true">pH dell'acqua</th>
+                                            <th data-field="ossigeno" data-sortable="true">Ossigeno disciolto (%)</th>
+                                            <th data-field="pm10" data-sortable="true">Polveri sottili - PM<sub>10</sub> (ug/cm<sup>3</sup>)</th>
+                                            <th data-field="batt" data-sortable="true">Batteria della boa (V)</th>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--/.main-->
+        <!-- All Jquery -->
+        <script src="/ela/js/lib/jquery/jquery.min.js"></script>
+        <!-- Bootstrap tether Core JavaScript -->
+        <script src="/ela/js/lib/bootstrap/js/popper.min.js"></script>
+        <script src="/ela/js/lib/bootstrap/js/bootstrap.min.js"></script>
+        <!-- slimscrollbar scrollbar JavaScript -->
+        <script src="/ela/js/jquery.slimscroll.js"></script>
+        <!--Menu sidebar -->
+        <script src="/ela/js/sidebarmenu.js"></script>
+        <!--stickey kit -->
+        <script src="/ela/js/lib/sticky-kit-master/dist/sticky-kit.min.js"></script>
+        <!--Custom JavaScript -->
+        <script src="/ela/js/custom.min.js"></script>
+
+
+        <script src="/ela/js/lib/datatables/datatables.min.js"></script>
+        <script src="/ela/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+        <script src="/ela/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+        <script src="/ela/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+        <script src="/ela/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+        <script src="/ela/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+        <script src="/ela/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+        <script src="/ela/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+        <script src="/ela/js/lib/datatables/datatables-init.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                window.responsiveTables.init();
+                $('#listaSegnalazioni').DataTable({
+                    "order": [
+                        [0, "desc"]
+                    ],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            });
+        </script>
+        </div>
+        <%- include modal.ejs %>
+</body>
+
+</html>

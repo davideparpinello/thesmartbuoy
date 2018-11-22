@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html ng-app="index" lang="it">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>The Smart Buoy - Dashboard</title>
+    <script src="/js/socket.io.js"></script>
+    <script src="/js/moment-with-locales.min.js"></script>
+    <link href="/ela/css/lib/chartist/chartist.min.css" rel="stylesheet">
+    <link href="/ela/css/lib/calendar2/semantic.ui.min.css" rel="stylesheet">
+    <link href="/ela/css/lib/calendar2/pignose.calendar.min.css" rel="stylesheet">
+    <link href="/ela/css/lib/owl.carousel.min.css" rel="stylesheet" />
+    <link href="/ela/css/lib/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="/ela/css/lib/sweetalert/sweetalert.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="/ela/css/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/ela/css/helper.css" rel="stylesheet">
+    <link href="/ela/css/style.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
+    <!--[if lt IE 9]>
+                                                        <script src="https:**oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+                                                        <script src="https:**oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+                                                        <![endif]-->
+</head>
+
+<body ng-controller="index" class="fix-header fix-sidebar">
+    <%- include header.ejs %>
+        <!-- Page wrapper  -->
+        <div class="page-wrapper">
+            <!-- Bread crumb -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">Dashboard</h3>
+                </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="javascript:void(0)">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- End Bread crumb -->
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <!-- Start Page Content -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card p-30">
+                            <div class="media">
+                                <div class="media-left meida media-middle">
+                                    <span>
+                                                                                        <i class="fa fa-list-ul f-s-40 color-primary"></i>
+                                                                                    </span>
+                                </div>
+                                <div class="media-body media-text-right">
+                                    <h2>
+                                        <%= numeroReports %>
+                                    </h2>
+                                    <p class="m-b-0">Segnalazioni</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card p-30">
+                            <div class="media">
+                                <div class="media-left meida media-middle">
+                                    <span>
+                                                                                        <i class="fa fa-envelope f-s-40 color-success"></i>
+                                                                                    </span>
+                                </div>
+                                <div class="media-body media-text-right">
+                                    <h2>
+                                        <%= email %>
+                                    </h2>
+                                    <p class="m-b-0">Indirizzi Mail</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card p-30">
+                            <div class="media">
+                                <div class="media-left meida media-middle">
+                                    <span>
+                                                                                        <i class="fa fa-map-pin f-s-40 color-warning"></i>
+                                                                                    </span>
+                                </div>
+                                <div class="media-body media-text-right">
+                                    <h2>1</h2>
+                                    <p class="m-b-0">Boe</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card p-30">
+                            <div class="media">
+                                <div class="media-left meida media-middle">
+                                    <span>
+                                                                                        <i class="fa fa-user f-s-40 color-danger"></i>
+                                                                                    </span>
+                                </div>
+                                <div class="media-body media-text-right">
+                                    <h2>2</h2>
+                                    <p class="m-b-0">Utenti abilitati</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- column -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Le ultime 10 segnalazioni</h4>
+                                <div class="card-content">
+                                    <div class="alert alert-dark">
+                                        <p id="pSegnalazione"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Ultima posizione registrata</h4>
+                                <div class="card-content">
+                                    <div id="position">
+                                        <iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBdSaTEfZB1JYdMFUSnkoSAIXil9YJiWs4
+                                            &q=<%= position %>&zoom=10" allowfullscreen>
+                                                                                        </iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Ultimo report</h4>
+                                <div class="card-content">
+                                    <br>
+                                    <p>
+                                        <b>Data e ora: </b>
+                                        <%= ora %>
+                                    </p>
+                                    <p>
+                                        <b>Temperatura dell'acqua:</b>
+                                        <%= data.tempAcqua %> °C
+                                    </p>
+                                    <p>
+                                        <b>Temperatura esterna:</b>
+                                        <%= data.tempEst %> °C
+                                    </p>
+                                    <p>
+                                        <b>Umidità:</b>
+                                        <%= data.umid %> %
+                                    </p>
+                                    <p>
+                                        <b>Velocità dell'acqua:</b>
+                                        <%= data.velAcqua %> dm
+                                            <sup>3</sup>/s
+                                    </p>
+                                    <p>
+                                        <b>Conducibilità dell'acqua:</b>
+                                        <%= + data.condAcqua %> us/cm
+                                    </p>
+                                    <p>
+                                        <b>Profondità dell'acqua:</b>
+                                        <%= data.pressAcqua %> m
+                                    </p>
+                                    <p>
+                                        <b>pH dell'acqua:</b>
+                                        <%= data.ph %>
+                                    </p>
+                                    <p>
+                                        <b>Batteria:</b>
+                                        <%= data.batt %> %
+                                    </p>
+                                    <p>
+                                        <b>Ossigeno disciolto:</b>
+                                        <%= data.ossigeno %> %
+                                    </p>
+                                    <p>
+                                        <b>Polveri sottili (PM<sub>10</sub>):</b>
+                                        <%= data.pm10 %> ug/cm<sup>3</sup>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="year-calendar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End PAge Content -->
+            </div>
+            <!-- End Container fluid  -->
+            <!-- End footer -->
+        </div>
+        <!-- End Page wrapper  -->
+        <!-- All Jquery -->
+        <script src="/ela/js/lib/jquery/jquery.min.js"></script>
+        <!-- Bootstrap tether Core JavaScript -->
+        <script src="/ela/js/lib/bootstrap/js/popper.min.js"></script>
+        <script src="/ela/js/lib/bootstrap/js/bootstrap.min.js"></script>
+        <!-- slimscrollbar scrollbar JavaScript -->
+        <script src="/ela/js/jquery.slimscroll.js"></script>
+        <!--Menu sidebar -->
+        <script src="/ela/js/sidebarmenu.js"></script>
+        <!--stickey kit -->
+        <script src="/ela/js/lib/sticky-kit-master/dist/sticky-kit.min.js"></script>
+        <script src="/ela/js/lib/sweetalert/sweetalert.min.js"></script>
+        <script src="/ela/js/lib/weather/jquery.simpleWeather.min.js"></script>
+        <script src="/ela/js/lib/weather/weather-init.js"></script>
+        <script src="/ela/js/lib/owl-carousel/owl.carousel.min.js"></script>
+        <script src="/ela/js/lib/owl-carousel/owl.carousel-init.js"></script>
+        <script src="/ela/js/lib/calendar-2/moment.latest.min.js"></script>
+        <!-- scripit init-->
+        <script src="/ela/js/lib/calendar-2/semantic.ui.min.js"></script>
+        <!-- scripit init-->
+        <script src="/ela/js/lib/calendar-2/prism.min.js"></script>
+        <!-- scripit init-->
+        <script src="/ela/js/lib/calendar-2/pignose.calendar.min.js"></script>
+        <!-- scripit init-->
+        <script src="/ela/js/lib/calendar-2/pignose.init.js"></script>
+        <!--Custom JavaScript -->
+        <script src="/ela/js/custom.min.js"></script>
+
+        <script>
+            var lastTenReports = <%- JSON.stringify(lastTenReports.reverse()) %>;
+            console.log(lastTenReports);
+            var index = 0;
+
+            function changeText() {
+                if (index == 5)
+                    index = 0;
+                var timestamp = lastTenReports[index].date;
+                var newText = moment(timestamp).locale('it').format("DD/MM/YYYY HH:mm:ss") + " - Temperatura esterna: " + lastTenReports[index].tempEst + " - Temperatura dell'acqua: " + lastTenReports[index].tempAcqua;
+                $('#pSegnalazione').stop().css('opacity', '0').html(newText).animate({
+                    opacity: 1
+                }, 1700);
+                index++;
+            }
+            setInterval(changeText, 8000);
+
+            ! function($) {
+                $(document).on("click", "ul.nav li.parent > a > span.icon", function() {
+                    $(this).find('em:first').toggleClass("glyphicon-minus");
+                });
+                $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+            }(window.jQuery);
+
+            $(window).on('resize', function() {
+                if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+            })
+            $(window).on('resize', function() {
+                if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+            })
+        </script>
+
+        </div>
+        <%- include modal.ejs %>
+</body>
+
+</html>

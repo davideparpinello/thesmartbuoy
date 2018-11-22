@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Grafici - La Boa Intelligente</title>
+		<script src="js/socket.io.js"></script>	
+		<script src="js/Chart.bundle.js"></script>
+		<script src="js/moment-with-locales.min.js"></script>	
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/datepicker3.css" rel="stylesheet">
+		<link href="css/styles.css" rel="stylesheet">
+		<script src="js/lumino.glyphs.js"></script>
+
+		<!--[if lt IE 9]>
+		<script src="js/html5shiv.js"></script>
+		<script src="js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"><span>La boa</span> intelligente!</a>
+				<!--<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> User <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
+							<li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
+							<li><a href="#"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+						</ul>
+					</li>
+				</ul>-->
+			</div>
+
+		</div><!-- /.container-fluid -->
+	</nav>
+
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar collapse in" area-expanded="true">
+		<ul class="nav menu">
+			<li><a href="/"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
+			<li><a href="/tables"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Lista segnalazioni</a></li>
+			<li class="active"><a href="/graphs"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Grafici</a></li>
+			<li><a href="/settings"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"/></svg> Impostazioni</a></li>
+			<li class="parent ">
+				<ul class="children collapse" id="sub-item-1">
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 1
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 2
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 3
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li role="presentation" class="divider"></li>
+		</ul>
+
+	</div><!--/.sidebar-->
+
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+				<li class="active">Home</li>
+			</ol>
+		</div><!--/.row-->
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Grafici</h1>
+			</div>
+		</div><!--/.row-->
+
+		<div class="row">
+			<div class="col-lg-12">
+				<ul class="nav nav-pills" id="myTab" role="tablist">
+				  <li class="nav-item active">
+				    <a class="nav-link" id="day-tab" data-toggle="tab" href="#day" role="tab" aria-controls="day" aria-selected="true">Giornaliero	</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link" id="week-tab" data-toggle="tab" href="#week" role="tab" aria-controls="week" aria-selected="true">Settimanale</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link" id="month-tab" data-toggle="tab" href="#month" role="tab" aria-controls="month" aria-selected="false">Mensile</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link" id="year-tab" data-toggle="tab" href="#year" role="tab" aria-controls="year" aria-selected="false">Annuale</a>
+				  </li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+				  <div class="tab-pane fade active in" id="day" role="tabpanel" aria-labelledby="day-tab">
+				  	<div class="panel panel-teal">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico temperatura dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="dayTempAcquaGraph" class="dailyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-teal">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico temperatura esterna
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="dayTempEstGraph" class="dailyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-teal">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico umidità
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="dayUmidGraph" class="dailyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-teal">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico velocità dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="dayVelAcquaGraph" class="dailyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-teal">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico conducibilità dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="dayCondAcquaGraph" class="dailyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-teal">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico profondità dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="dayPressAcquaGraph" class="dailyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-teal">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico pH dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="dayPhGraph" class="dailyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-teal">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico ossigeno disciolto
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="dayOssigenoGraph" class="dailyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-teal">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico batteria della boa
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="dayBattGraph" class="dailyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+				  </div>
+				  <div class="tab-pane fade" id="week" role="tabpanel" aria-labelledby="week-tab">
+				  	<div class="panel panel-orange">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico temperatura dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="weekTempAcquaGraph" class="weeklyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-orange">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico temperatura esterna
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="weekTempEstGraph" class="weeklyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-orange">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico umidità
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="weekUmidGraph" class="weeklyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-orange">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico velocità dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="weekVelAcquaGraph" class="weeklyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-orange">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico conducibilità dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="weekCondAcquaGraph" class="weeklyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-orange">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico profondità dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="weekPressAcquaGraph" class="weeklyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-orange">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico pH dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="weekPhGraph" class="weeklyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-orange">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico ossigeno disciolto
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="weekOssigenoGraph" class="weeklyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-orange">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico batteria della boa
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="weekBattGraph" class="weeklyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+				  </div>
+				  <div class="tab-pane fade" id="month" role="tabpanel" aria-labelledby="month-tab">
+				  	<div class="panel panel-red">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico temperatura dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="monthTempAcquaGraph" class="monthlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-red">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico temperatura esterna
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="monthTempEstGraph" class="monthlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-red">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico umidità
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="monthUmidGraph" class="monthlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-red">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico velocità dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="monthVelAcquaGraph" class="monthlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-red">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico conducibilità dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="monthCondAcquaGraph" class="monthlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-red">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico profondità dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="monthPressAcquaGraph" class="monthlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-red">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico pH dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="monthPhGraph" class="monthlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-red">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico ossigeno disciolto
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="monthOssigenoGraph" class="monthlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-red">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico batteria della boa
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="monthBattGraph" class="monthlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+				  </div>
+				  <div class="tab-pane fade" id="year" role="tabpanel" aria-labelledby="year-tab">
+				  	<div class="panel panel-blue">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico temperatura dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="yearTempAcquaGraph" class="yearlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-blue">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico temperatura esterna
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="yearTempEstGraph" class="yearlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-blue">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico umidità
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="yearUmidGraph" class="yearlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-blue">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico velocità dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="yearVelAcquaGraph" class="yearlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-blue">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico conducibilità dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="yearCondAcquaGraph" class="yearlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-blue">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico profondità dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="yearPressAcquaGraph" class="yearlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-blue">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico pH dell'acqua
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="yearPhGraph" class="yearlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-blue">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico ossigeno disciolto
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="yearOssigenoGraph" class="yearlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+					<div class="panel panel-blue">
+						<div class="panel-heading dark-overlay">
+							<svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Grafico batteria della boa
+						</div>
+						<div class="panel-body" style="background-color: white;">
+							<canvas id="yearBattGraph" class="yearlyGraphs graphs" style="background-color: white;" height="130"></canvas>
+						</div>
+					</div>
+					<br>
+				  </div>
+				</div>
+				
+			</div>
+		</div>
+
+		<div class="row">
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header" style="background-color:#f2dede;">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel" style="color: #a94442">Nuova allerta!</h4>
+			  </div>
+			  <div class="modal-body" id="modal_content">
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">Ricevuto</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		</div>
+		<div class="col-sm-12">
+				<p class="back-link">Developed by <a href="http://www.iisvittorioveneto.gov.it">IIS Vittorio Veneto - Città della Vittoria</a></p>
+			</div>
+			<!--/.row-->
+	</div>	<!--/.main-->
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
+	<script src="js/core.js"></script>
+	<script>
+
+		
+
+		!function ($) {
+		    $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+		        $(this).find('em:first').toggleClass("glyphicon-minus");
+		    });
+		    $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+
+		var ctx = $("#weeklyChart");
+		var lastYearReports = <%- JSON.stringify(lastYearReports) %>;
+		var graphArray = new Array(9);
+		var fieldArray = ["tempAcqua", "tempEst", "umid", "velAcqua", "condAcqua", "pressAcqua", "ph", "ossigeno", "batt"];
+		for(var i = 0; i < graphArray.length; i++) {
+			
+			var strGraph = "[";
+			for(var k = 0; k < lastYearReports.length; k++) {
+				if (k == lastYearReports.length - 1) {
+					strGraph = strGraph + "{\"t\": " + moment(lastYearReports[k].date) + ", \"y\": " + lastYearReports[k][fieldArray[i]] + "}";
+				}
+				else {
+					strGraph = strGraph + "{\"t\": " + moment(lastYearReports[k].date) + ", \"y\": " + lastYearReports[k][fieldArray[i]] + "}, ";
+				}
+			}
+			strGraph = strGraph + "]";
+			strGraph = JSON.parse(strGraph);
+			graphArray[i] = strGraph;
+		}
+		
+
+		var dailyGraphsArr = $('.dailyGraphs');
+		var weeklyGraphsArr = $('.weeklyGraphs');
+		var monthlyGraphsArr = $('.monthlyGraphs');
+		var yearlyGraphsArr = $('.yearlyGraphs');
+
+		var graphsArr = [dailyGraphsArr, weeklyGraphsArr, monthlyGraphsArr, yearlyGraphsArr];
+		console.log(graphsArr);
+
+		for(var i = 0; i < graphsArr.length; i++) {
+			var strUnit;
+			var strSubtract;
+			var strColor;
+
+			switch (i) {
+				case 0:
+					strUnit = 'hour';
+					strSubtract = 'day';
+					strColor = '#1ebfae';
+					break;
+				case 1:
+					strUnit = 'day';
+					strSubtract = 'week';
+					strColor = '#ffb53e';
+					break;
+				case 2:
+					strUnit = 'day';
+					strSubtract = 'month';
+					strColor = '#f9243f';
+					break;
+				case 3:
+					strUnit = 'month';
+					strSubtract = 'year';
+					strColor = '#30a5ff';
+					break;
+			}
+
+			var minDate = moment();
+			if(strSubtract == 'month' || strSubtract == 'year') {
+				minDate = moment("20180101");
+			}
+			else {
+				minDate = minDate.subtract(1, strSubtract);
+			}
+			
+
+			for(var j = 0; j < graphsArr[i].length; j++) {
+
+				var myChart = new Chart(graphsArr[i][j], {
+				    type: 'line',
+				    data: {
+				        "datasets": [{
+				            "label": fieldArray[j] + " - " + strSubtract,
+				            data: graphArray[j],
+				            "fill": false,
+				            "borderColor": strColor,
+				            "lineTension": 0
+				        }]
+
+				    },
+				    options: {
+				        scales: {
+				            xAxes: [{
+				                type: 'time',
+				                time: {
+				                    unit: strUnit,
+									min: minDate,
+									max: moment()
+				                }
+				            }]
+				        },
+				        legend: {
+				        	display: false
+				        },
+				        tooltips: {
+				        	enabled: false
+			        	}
+				    }
+				});
+
+			}
+
+
+		}
+
+		
+		
+	</script>
+	</body>
+</html>

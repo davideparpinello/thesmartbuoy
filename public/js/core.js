@@ -1,0 +1,26 @@
+var socket = io('/controllori');
+socket.on('new message', function(data){
+	console.log("notifico core");
+	mdlContent = document.getElementById('alertText');
+	mdlContent.innerHTML = "";
+	mdlContent.innerHTML += "<p><b>Posizione:</b> " + data.longitud + "°, " + data.latitud + "°</p>";
+	mdlContent.innerHTML += "<p><b>Data e ora: </b>" + moment().locale('it') .format('LLL')+ "</p>";
+	mdlContent.innerHTML += "<p><b>Temperatura dell'acqua:</b> " + data.tempAcqua + " °C</p>";
+	mdlContent.innerHTML += "<p><b>Temperatura esterna:</b> " + data.tempEst + "°C</p>";
+	mdlContent.innerHTML += "<p><b>Umidità:</b> " + data.umid + "%</p>";
+	mdlContent.innerHTML += "<p><b>Velocità dell'acqua:</b> " + data.velAcqua + "dm<sup>3</sup>/s</p>";
+	mdlContent.innerHTML += "<p><b>Conducibilità dell'acqua:</b> " + data.condAcqua + "mS/l</p>";
+	mdlContent.innerHTML += "<p><b>Profondità dell'acqua:</b> " + data.pressAcqua + "m</p>";
+	mdlContent.innerHTML += "<p><b>pH dell'acqua:</b> " + data.ph + "</p>";
+	mdlContent.innerHTML += "<p><b>Ossigeno disciolto:</b> " + data.ossigeno + "%</p>";
+	mdlContent.innerHTML += "<p><b>Polveri sottili PM<sub>10</sub>:</b> " + data.pm10 + "ug/cm<sup>3</sup></p>";
+	mdlContent.innerHTML += "<p><b>Batteria:</b> " + data.batt + "V</p>";
+	overlay = document.getElementById('overlay');
+	overlay.style.opacity = "1.03";
+	overlay.style.display = "block";
+	overAlert = $("#overAlert");
+	overAlert.removeClass('hideSweetAlert');
+	overAlert.addClass('showSweetAlert');
+	overAlert.addClass('visible');
+	overAlert.css("display", "block");
+});

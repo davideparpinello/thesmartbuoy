@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Impostazioni - La Boa Intelligente</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/datepicker3.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="js/lumino.glyphs.js"></script>
+    <link href="ela/css/lib/sweetalert/sweetalert.css" rel="stylesheet">
+    
+
+    <!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><span>La boa</span> intelligente!</a>
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+        
+        <ul class="nav menu">
+            <li>
+                <a href="/">
+                    <svg class="glyph stroked dashboard-dial">
+                        <use xlink:href="#stroked-dashboard-dial"></use>
+                    </svg> Dashboard</a>
+            </li>
+            <li>
+                <a href="/tables">
+                    <svg class="glyph stroked table">
+                        <use xlink:href="#stroked-table"></use>
+                    </svg> Lista segnalazioni</a>
+            </li>
+			<li><a href="/graphs"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Grafici</a></li>
+            <li class="active">
+                <a href="/settings">
+                    <svg class="glyph stroked gear">
+                        <use xlink:href="#stroked-gear"/>
+                    </svg> Impostazioni
+            </li>
+            <li class="parent ">
+                <ul class="children collapse" id="sub-item-1">
+                    <li>
+                        <a class="" href="#">
+                            <svg class="glyph stroked chevron-right">
+                                <use xlink:href="#stroked-chevron-right"></use>
+                            </svg> Sub Item 1
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="#">
+                            <svg class="glyph stroked chevron-right">
+                                <use xlink:href="#stroked-chevron-right"></use>
+                            </svg> Sub Item 2
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="#">
+                            <svg class="glyph stroked chevron-right">
+                                <use xlink:href="#stroked-chevron-right"></use>
+                            </svg> Sub Item 3
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li role="presentation" class="divider"></li>
+        </ul>
+
+    </div>
+    <!--/.sidebar-->
+    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/">
+                        <svg class="glyph stroked home">
+                            <use xlink:href="#stroked-home"></use>
+                        </svg>
+                    </a>
+                </li>
+                <li class="active">Settings</li>
+            </ol>
+        </div>
+        <!--/.row-->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Pannello di configurazione</h1>
+            </div>
+        </div>
+        <!--/.row-->
+        <div class="row">
+            <!-- <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Aggiungi un controllore</div>
+                    <div class="panel-body">
+                        <div class="col-md-6">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label>Nome area</label>
+                                    <input class="form-control" placeholder="" id="nuova_area" autocomplete="off">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Indirizzo IP esp</label>
+                                    <input class="form-control" id="nuovo_ip" autocomplete="off">
+                                </div>
+                                <button onclick="addEspToList()" class="btn btn-primary">Inserisci</button>
+                                <button type="reset" class="btn btn-default">Annulla</button>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div id="listaEspContainer" style="font-size:110%">
+                                    <p style="font-size:120%">Lista Controllori:</p>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col
+        </div>
+        <!-- /.row
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Rimuovi controllore
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-6">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label>Indirizzo IP da rimuovere</label>
+                                    <input class="form-control" id="ip_da_rimuovere" autocomplete="off">
+                                </div>
+                                <button onclick="removeEspFromList()" class="btn btn-primary">Conferma</button>
+                                <button type="reset" class="btn btn-default">Annulla</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col
+            </div>
+        </div> -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Lista email controllori
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-6">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label>Indirizzo email da aggiungere</label>
+                                    <input type="email" class="form-control" id="email_da_aggiungere" autocomplete="off" required>
+                                </div>
+                                <button onclick="addEmailToList()" class="btn btn-primary">Inserisci</button>
+                                <button type="reset" class="btn btn-default">Annulla</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div id="listaEmailContainer" style="font-size:110%">
+                                            <p style="font-size:120%">Lista Controllori:</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-->
+            </div>
+        </div>
+        <!--/.main-->
+
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
+        <script>
+            ! function($) {
+                $(document).on("click", "ul.nav li.parent > a > span.icon", function() {
+                    $(this).find('em:first').toggleClass("glyphicon-minus");
+                });
+                $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+            }(window.jQuery);
+
+            $(window).on('resize', function() {
+                if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+            })
+            $(window).on('resize', function() {
+                if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+            })
+        </script>
+</body>
+<script>
+    var listaEsp = <%- JSON.stringify(espAttuali) %>;
+    console.log(listaEsp);
+    for (var i = 0; i < listaEsp.esp.length; i++) {
+        $('#listaEspContainer').append("<p id='" + listaEsp.esp[i].ip + "'><span><b>" + listaEsp.esp[i].ip + "</b></span>:" + "<span>" + listaEsp.esp[i].locazione + "</span><br></p>");
+    }
+    for (var i = 0; i < listaEsp.email.length; i++) {
+        $('#listaEmailContainer').append("<p id='" + listaEsp.email[i].email + "'>" + listaEsp.email[i].email + "</p>");
+    }
+
+    function addEspToList() {
+        $.ajax({
+            url: "/add-esp",
+            type: "post",
+            data: {
+                ip: document.getElementById('nuovo_ip').value.trim(),
+                area: document.getElementById('nuova_area').value.trim()
+            },
+            success: function() {
+                console.log("gg");
+            },
+            error: function() {
+                console.log("gg we lost");
+            }
+        })
+    }
+
+    function addEmailToList(){
+        $.ajax({
+            url: "/add-email",
+            type: "post",
+            data: {
+                email: document.getElementById('email_da_aggiungere').value.trim()
+            },
+            success: function() {
+                console.log("gg");
+            },
+            error: function() {
+                console.log("gg we lost");
+            }
+        })
+    }
+</script>
+
+</html>
